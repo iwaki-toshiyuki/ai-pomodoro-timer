@@ -13,7 +13,13 @@ yarn dev
 http://localhost:3000
 ```
 
+## Gemini
+```
+gemini
+```
+
 ## Gemini CLI の使い方
+
 
 このプロジェクトでは、Gemini CLI を使用して、コードの質問、変更、ファイル操作などを行うことができます。
 
