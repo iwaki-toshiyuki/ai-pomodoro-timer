@@ -13,5 +13,11 @@ yarn dev
 http://localhost:3000
 ```
 
+## Geminiコマンド
+```
+gemini
+```
+
+
 
 
