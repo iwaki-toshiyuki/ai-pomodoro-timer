@@ -3,6 +3,7 @@
 
 // 必要なコンポーネントをインポートします。
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Controls from './Controls';
 import TimerDisplay from './TimerDisplay';
 
 // TimerApp コンポーネントを定義します。(Card コンポーネントを使用してタイマーアプリのUIを構築)
@@ -14,12 +15,14 @@ export default function TimerApp() {
           <CardTitle className="text-2xl font-bold  text-center">作業時間</CardTitle>
         </CardHeader>
         {/* TimerDisplay コンポーネントを CardContent 内に配置してタイマーを表示 */}
-        <CardContent className="flex justify-center">
+        <CardContent className="flex flex-col items-center gap-6">
           <TimerDisplay
             // 初期値として25分0秒を設定
             minutes={25}
             seconds={0}
           />
+           {/* Controls コンポーネントを表示 */}
+          <Controls />
         </CardContent>
       </Card>
     </div>
