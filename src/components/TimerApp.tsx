@@ -103,9 +103,10 @@ export default function TimerApp() {
         {/* TimerDisplay コンポーネントを CardContent 内に配置してタイマーを表示 */}
         <CardContent className="flex flex-col items-center gap-6">
           <TimerDisplay
-            // 初期値として timeLeft の minutes と seconds を渡す
+            // 初期値として timeLeft の minutes と secondsと mode を渡す
             minutes={timeLeft.minutes}
             seconds={timeLeft.seconds}
+            mode={mode}
           />
           {/* Controls コンポーネントを表示 */}
           <Controls
