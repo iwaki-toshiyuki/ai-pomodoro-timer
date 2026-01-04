@@ -5,9 +5,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Controls from './Controls';
 import TimerDisplay from './TimerDisplay';
+import { useState } from 'react';
 
 // TimerApp コンポーネントを定義します。(Card コンポーネントを使用してタイマーアプリのUIを構築)
 export default function TimerApp() {
+  // タイマーの実行状態を管理するstate
+  const [isRunning, setIsRunning] = useState(false);
+ 
+  // 開始/停止ボタンのハンドラ
+  const handleStart = () => {
+    setIsRunning(!isRunning);
+  };
+ 
+  // リセットボタンのハンドラ
+  const handleReset = () => {
+    setIsRunning(false);
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
@@ -22,7 +35,11 @@ export default function TimerApp() {
             seconds={0}
           />
            {/* Controls コンポーネントを表示 */}
-          <Controls />
+         <Controls
+            onStart={handleStart}
+            onReset={handleReset}
+            isRunning={isRunning}
+          />
         </CardContent>
       </Card>
     </div>
