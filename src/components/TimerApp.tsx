@@ -1,15 +1,15 @@
 // use client directiveを追加して、クライアントサイドでのレンダリングを指定します。
-'use client';
+"use client";
 
 // 必要なコンポーネントをインポートします。
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Controls from './Controls';
-import TimerDisplay from './TimerDisplay';
-import { useState, useEffect} from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Controls from "./Controls";
+import TimerDisplay from "./TimerDisplay";
+import { useState, useEffect } from "react";
 
 // タイマーのモードを表す型(作業モードと休憩モード)を定義します。
 // ユニオン型を使用して 'work' または 'break' のいずれかの文字列を取ることができます。
-type Mode = 'work' | 'break';
+type Mode = "work" | "break";
 
 // TimerApp コンポーネントを定義します。(Card コンポーネントを使用してタイマーアプリのUIを構築)
 export default function TimerApp() {
@@ -20,19 +20,19 @@ export default function TimerApp() {
   const [timeLeft, setTimeLeft] = useState({ minutes: 25, seconds: 0 });
 
   // モードの状態を管理する変数
-  const [mode, setMode] = useState<Mode>('work');
- 
+  const [mode, setMode] = useState<Mode>("work");
+
   // モードを切り替える関数
   const toggleMode = () => {
     // 現在のモードを反対のモードに切り替える
-    const newMode = mode === 'work' ? 'break' : 'work';
+    const newMode = mode === "work" ? "break" : "work";
     setMode(newMode);
 
     // モードに応じてタイマーの時間をリセット
     // 作業モードなら25分、休憩モードなら5分
     setTimeLeft({
-        minutes: newMode === 'work' ? 25 : 5,
-        seconds: 0,
+      minutes: newMode === "work" ? 25 : 5,
+      seconds: 0,
     });
 
     // タイマーを停止状態にする
@@ -43,17 +43,21 @@ export default function TimerApp() {
   const handleStart = () => {
     setIsRunning(!isRunning);
   };
- 
+
   // リセットボタンのハンドラ
   const handleReset = () => {
     setIsRunning(false);
-    setTimeLeft({ minutes: 25, seconds: 0 });
+    // モードに応じてタイマーの時間をリセット
+    setTimeLeft({ 
+        minutes: mode === "work" ? 25 : 5, 
+        seconds: 0 
+    });
   };
 
-useEffect(() => {
+  useEffect(() => {
     // setIntervalの戻り値（タイマーID）を保持する変数
     let intervalId: NodeJS.Timeout;
- 
+
     // タイマーが実行中の場合のみ処理を行う
     if (isRunning) {
       // 1秒（1000ミリ秒）ごとに実行される処理を設定しつつ、
@@ -75,7 +79,7 @@ useEffect(() => {
         });
       }, 1000);
     }
- 
+
     // クリーンアップ関数（コンポーネントのアンマウント時やisRunningが変わる前に実行される）
     return () => {
       // ブラウザのタイマーが設定されている場合は、それをクリアする
@@ -84,14 +88,14 @@ useEffect(() => {
       }
     };
   }, [isRunning]); // isRunningが変わったときだけこのエフェクトを再実行
- 
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-            <CardTitle className="text-2xl font-bold  text-center">
-                {mode === 'work' ? '作業時間' : '休憩時間'}
-            </CardTitle>
+          <CardTitle className="text-2xl font-bold  text-center">
+            {mode === "work" ? "作業時間" : "休憩時間"}
+          </CardTitle>
         </CardHeader>
         {/* TimerDisplay コンポーネントを CardContent 内に配置してタイマーを表示 */}
         <CardContent className="flex flex-col items-center gap-6">
@@ -100,8 +104,8 @@ useEffect(() => {
             minutes={timeLeft.minutes}
             seconds={timeLeft.seconds}
           />
-           {/* Controls コンポーネントを表示 */}
-         <Controls
+          {/* Controls コンポーネントを表示 */}
+          <Controls
             onStart={handleStart}
             onReset={handleReset}
             onModeToggle={toggleMode}
