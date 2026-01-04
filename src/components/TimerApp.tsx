@@ -7,14 +7,38 @@ import Controls from './Controls';
 import TimerDisplay from './TimerDisplay';
 import { useState, useEffect} from 'react';
 
+// タイマーのモードを表す型(作業モードと休憩モード)を定義します。
+// ユニオン型を使用して 'work' または 'break' のいずれかの文字列を取ることができます。
+type Mode = 'work' | 'break';
+
 // TimerApp コンポーネントを定義します。(Card コンポーネントを使用してタイマーアプリのUIを構築)
 export default function TimerApp() {
   // タイマーの実行状態を管理するstate
   const [isRunning, setIsRunning] = useState(false);
 
   // タイマーの残り時間を保持する状態変数
-  const [timeLeft, setTimeLeft] = useState({ minutes: 0, seconds: 3 });
+  const [timeLeft, setTimeLeft] = useState({ minutes: 25, seconds: 0 });
+
+  // モードの状態を管理する変数
+  const [mode, setMode] = useState<Mode>('work');
  
+  // モードを切り替える関数
+  const toggleMode = () => {
+    // 現在のモードを反対のモードに切り替える
+    const newMode = mode === 'work' ? 'break' : 'work';
+    setMode(newMode);
+
+    // モードに応じてタイマーの時間をリセット
+    // 作業モードなら25分、休憩モードなら5分
+    setTimeLeft({
+        minutes: newMode === 'work' ? 25 : 5,
+        seconds: 0,
+    });
+
+    // タイマーを停止状態にする
+    setIsRunning(false);
+  };
+
   // 開始/停止ボタンのハンドラ
   const handleStart = () => {
     setIsRunning(!isRunning);
@@ -65,7 +89,9 @@ useEffect(() => {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold  text-center">作業時間</CardTitle>
+            <CardTitle className="text-2xl font-bold  text-center">
+                {mode === 'work' ? '作業時間' : '休憩時間'}
+            </CardTitle>
         </CardHeader>
         {/* TimerDisplay コンポーネントを CardContent 内に配置してタイマーを表示 */}
         <CardContent className="flex flex-col items-center gap-6">
@@ -78,6 +104,7 @@ useEffect(() => {
          <Controls
             onStart={handleStart}
             onReset={handleReset}
+            onModeToggle={toggleMode}
             isRunning={isRunning}
           />
         </CardContent>
