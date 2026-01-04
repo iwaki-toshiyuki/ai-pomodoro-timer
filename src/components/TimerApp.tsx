@@ -15,7 +15,11 @@ export default function TimerApp() {
         </CardHeader>
         {/* TimerDisplay コンポーネントを CardContent 内に配置してタイマーを表示 */}
         <CardContent className="flex justify-center">
-          <TimerDisplay />
+          <TimerDisplay
+            // 初期値として25分0秒を設定
+            minutes={25}
+            seconds={0}
+          />
         </CardContent>
       </Card>
     </div>
