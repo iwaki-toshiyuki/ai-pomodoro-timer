@@ -2,7 +2,7 @@
 "use client";
 
 // 必要なコンポーネントをインポートします。
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import Controls from "./Controls";
 import MetadataUpdater from "./MetadataUpdater";
 import TimerDisplay from "./TimerDisplay";
@@ -18,8 +18,11 @@ export default function TimerApp() {
   // タイマーの実行状態を管理するstate
   const [isRunning, setIsRunning] = useState(false);
 
+  // 作業時間を管理する状態変数
+  const [workDuration, setWorkDuration] = useState(25);
+
   // タイマーの残り時間を保持する状態変数
-  const [timeLeft, setTimeLeft] = useState({ minutes: 25, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState({ minutes: workDuration, seconds: 0 });
 
   // モードの状態を管理する変数
   const [mode, setMode] = useState<Mode>("work");
@@ -33,7 +36,7 @@ export default function TimerApp() {
     // モードに応じてタイマーの時間をリセット
     // 作業モードなら25分、休憩モードなら5分
     setTimeLeft({
-      minutes: newMode === "work" ? 25 : 5,
+      minutes: newMode === "work" ? workDuration : 5,
       seconds: 0,
     });
 
@@ -50,9 +53,9 @@ export default function TimerApp() {
   const handleReset = () => {
     setIsRunning(false);
     // モードに応じてタイマーの時間をリセット
-    setTimeLeft({ 
-        minutes: mode === "work" ? 25 : 5, 
-        seconds: 0 
+    setTimeLeft({
+        minutes: mode === 'work' ? workDuration : 5,
+        seconds: 0
     });
   };
 
@@ -117,6 +120,32 @@ export default function TimerApp() {
             isRunning={isRunning}
           />
         </CardContent>
+        <CardFooter className="flex justify-center gap-2 items-center">
+          <label className="text-sm font-medium">作業時間</label>
+          {/* 作業時間の選択肢 */}
+          <select
+            value={workDuration}
+            // 変更時に作業時間を更新し、現在のモードが作業中でタイマーが停止している場合は timeLeft も更新
+            onChange={(e) => {
+              const newDuration = parseInt(e.target.value);
+              setWorkDuration(newDuration);
+              if (mode === 'work' && !isRunning) {
+                setTimeLeft({ minutes: newDuration, seconds: 0 });
+              }
+            }}
+            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {/* 作業時間のオプションを生成 */}
+            {[5, 10, 15, 30, 45, 60].map((minutes) => (
+              <option
+                key={minutes}
+                value={minutes}
+              >
+                {minutes}分
+              </option>
+            ))}
+          </select>
+        </CardFooter>
       </Card>
         {/* MetadataUpdater コンポーネントを追加してドキュメントのタイトルを更新 */}
       <MetadataUpdater
