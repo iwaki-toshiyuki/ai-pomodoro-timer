@@ -60,6 +60,14 @@ export default function TimerApp() {
       seconds: 0,
     });
 
+    // 休憩モードに切り替わった場合にリフレッシュ提案を生成
+    if (newMode === 'break') {
+      generateRefreshSuggestion()
+        .then((suggestion) => setRefreshSuggestion(suggestion))
+        .catch(console.error);
+    }
+
+
     // 自動開始がONの場合は次のセッションを自動的に開始
     setIsRunning(autoStart);
   };
@@ -241,7 +249,7 @@ export default function TimerApp() {
 
       {/* リフレッシュ提案コンポーネントを表示 */}
       <RefreshSuggestion
-        suggestion={'hoge'}
+        suggestion={refreshSuggestion}
         onClose={() => setRefreshSuggestion(null)}
       />
     </div>
