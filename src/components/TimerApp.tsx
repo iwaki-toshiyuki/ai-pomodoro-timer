@@ -10,6 +10,7 @@ import TimerDisplay from "./TimerDisplay";
 import { useState, useEffect, useRef } from "react";
 import { useReward } from 'react-rewards';
 import { playNotificationSound } from '@/utils/sound';
+import { generateRefreshSuggestion } from '@/utils/gemini';
 
 // タイマーのモードを表す型(作業モードと休憩モード)を定義します。
 // ユニオン型を使用して 'work' または 'break' のいずれかの文字列を取ることができます。
@@ -119,6 +120,17 @@ export default function TimerApp() {
       }
     };
   }, [isRunning]); // isRunningが変わったときだけこのエフェクトを再実行
+
+  // // ================== 動作確認用ここから ==================
+  // useEffect(() => {
+  //   const testGemini = async () => {
+  //     const suggestion = await generateRefreshSuggestion();
+  //     console.log(suggestion);
+  //   }
+  //   testGemini();
+  // }, []);
+  // // ================== 動作確認用ここまで ==================
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4 relative">
