@@ -145,7 +145,14 @@ export default function TimerApp() {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4 relative">
+    <div className="min-h-screen flex items-center justify-center bg-background p-4 relative bg-gradient-to-br from-sky-100 via-cyan-100 to-blue-100">
+      {/* 👇 ここを追加 */}
+      <div className="flex flex-col items-center gap-6 text-blue-500">
+
+        {/* タイトル（画像の上に出したい部分） */}
+        <h1 className="text-5xl font-bold tracking-tight text-blue-500">
+          Next AI Pomodoro Timer
+        </h1>
       <span
         id="confettiReward"
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
@@ -240,6 +247,7 @@ export default function TimerApp() {
 
         </CardFooter>
       </Card>
+      </div>
         {/* MetadataUpdater コンポーネントを追加してドキュメントのタイトルを更新 */}
       <MetadataUpdater
         minutes={timeLeft.minutes}
