@@ -1,4 +1,4 @@
-# ai-pomodoro-timer
+# Next AI Pomodoro Timer
 Next.jsで簡易的なポモドーロアプリを作成
 
 ## URL
