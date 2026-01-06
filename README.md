@@ -1,6 +1,10 @@
 # ai-pomodoro-timer
 Next.jsで簡易的なポモドーロアプリを作成
 
+## URL
+https://ai-pomodoro-timer-sandy.vercel.app/
+
+
 ## 起動コマンド
 ```bash
 npm run dev
