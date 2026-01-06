@@ -8,6 +8,11 @@ npm run dev
 yarn dev
 ```
 
+## 型エラーチェックコマンド
+```bash
+npx tsc --noEmit
+```
+
 ## ローカル画面
 ```bash
 http://localhost:3000
